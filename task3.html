@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Music Generator</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .container {
+            margin-top: 150px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #ffcc00;
+        }
+
+        button:hover {
+            background-color: #ffaa00;
+        }
+
+        h1 {
+            font-size: 40px;
+        }
+
+        p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎵 AI Music Generator</h1>
+    <p>Click the button to generate random music tones</p>
+    <button onclick="generateMusic()">Generate Music</button>
+</div>
+
+<script>
+    function generateMusic() {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Random musical frequencies (C major scale)
+        const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88];
+
+        let currentTime = audioContext.currentTime;
+
+        for (let i = 0; i < 10; i++) {
+            const oscillator = audioContext.createOscillator();
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(
+                notes[Math.floor(Math.random() * notes.length)],
+                currentTime
+            );
+
+            oscillator.connect(audioContext.destination);
+            oscillator.start(currentTime);
+            oscillator.stop(currentTime + 0.4);
+
+            currentTime += 0.4;
+        }
+    }
+</script>
+
+</body>
+</html>
